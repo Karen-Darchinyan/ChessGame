@@ -2,11 +2,11 @@
 
 public struct Coord
 {
-    public int Rank;
-    public int File;
-    public Coord(int bx, int by) 
+    public Column Column;
+    public int Row;
+    public Coord(Column by, int bx) 
     {
-        Rank = bx;
-        File = by;
+        Column = by;
+        Row = bx;
     }
 }

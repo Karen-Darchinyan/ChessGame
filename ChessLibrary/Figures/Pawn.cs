@@ -2,31 +2,33 @@
 {
     public class Pawn
     {
-        public bool IsMovePossible(Coord startCoord, Coord endCoord, bool isWhite, bool captures)
+        public Color Color;
+        public Pawn(Color color) 
         {
-            int bRank = startCoord.Rank - endCoord.Rank;
-            int bFile = Math.Abs(startCoord.File - endCoord.File);
-            if (isWhite)
+            Color = color;
+        }
+
+        public bool IsMovePossible(Coord startCoord, Coord endCoord)
+        {
+            int bRow = startCoord.Row - endCoord.Row;
+            int bColumn = Math.Abs(startCoord.Column - endCoord.Column);
+            if (Color == Color.White)
             {
-                if (startCoord.Rank <= 0 || endCoord.Rank <= startCoord.Rank)
+                if (startCoord.Row <= 0 || endCoord.Row <= startCoord.Row)
                     return false;
-                if (captures)
-                    return bRank == -1 && bFile == 1;
-                if (startCoord.Rank == 2)
-                    return bRank == -1 || bRank == -2;
-                else if(startCoord.Rank > 2)
-                    return bRank == -1; 
+                if (startCoord.Row == 2)
+                    return bRow == -1 || bRow == -2;
+                else if(startCoord.Row > 2)
+                    return bRow == -1; 
             }
             else
             {
-                if (startCoord.Rank >= 8 || endCoord.Rank >= startCoord.Rank)
+                if (startCoord.Row >= 8 || endCoord.Row >= startCoord.Row)
                     return false;
-                if (captures)
-                    return bRank == 1 && bFile == 1;
-                if (startCoord.Rank == 7)
-                    return bRank == 1 || bRank == 2;
-                else if (startCoord.Rank < 7)
-                    return bRank == 1;
+                if (startCoord.Row == 7)
+                    return bRow == 1 || bRow == 2;
+                else if (startCoord.Row < 7)
+                    return bRow == 1;
             }
             return false;
         }

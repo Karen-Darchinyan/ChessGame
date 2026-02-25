@@ -12,26 +12,26 @@ namespace ConsoleApp
             {
                 Console.Write("Enter the value of the first column (A-H) and row (1-8): ");
                 string? firstValue = Console.ReadLine();
-                if (firstValue.Length != 2 || firstValue[0] < 'A' || firstValue[0] > 'H' || firstValue[1] < '1' || firstValue[1] > '8')
+                if (string.IsNullOrEmpty(firstValue) || firstValue.Length != 2 || firstValue[0] < 'A' || firstValue[0] > 'H' || firstValue[1] < '1' || firstValue[1] > '8')
                 {
                     Console.WriteLine("Invalid first position.");
                     return;
                 }
                 Console.Write("Enter the value of the last column (A-H) and row (1-8): ");
                 string? lastValue = Console.ReadLine();
-                if (lastValue.Length != 2 || lastValue[0] < 'A' || lastValue[0] > 'H' || lastValue[1] < '1' || lastValue[1] > '8')
+                if (string.IsNullOrEmpty(lastValue) || lastValue.Length != 2 || lastValue[0] < 'A' || lastValue[0] > 'H' || lastValue[1] < '1' || lastValue[1] > '8')
                 {
                     Console.WriteLine("Invalid first position.");
                     return;
                 }
                 // Քանի որ զանգվածը տողերը դասակարգված են վերևից ներքև, իսկ շախմատում դա ներքևից վերև է:
-                int file1 = firstValue[0] - 'A';
-                int rank1 = 7 - (firstValue[1] - '1');
-                int file2 = lastValue[0] - 'A';
-                int rank2 = 7 - (lastValue[1] - '1');
+                Column column1 = (Column)(firstValue[0] - 'A');
+                int row1 = (firstValue[1] - '1') + 1;
+                Column column2 = (Column)(lastValue[0] - 'A');
+                int row2 = (lastValue[1] - '1') + 1;
 
-                Coord startCoord = new Coord(file1, rank1);
-                Coord endCoord = new Coord(file2, rank2);
+                Coord startCoord = new Coord(column1, row1);
+                Coord endCoord = new Coord(column2, row2);
 
                 King king = new King();
                 bool isMoveKing = king.IsMovePossible(startCoord, endCoord);
@@ -40,7 +40,7 @@ namespace ConsoleApp
                 Rook rook = new Rook();
                 bool isMoveRook = rook.IsMovePossible(startCoord, endCoord);
                 Console.WriteLine($"Rook: {isMoveRook}");
-
+                Console.WriteLine();
                 Bishop bishop = new Bishop();
                 bool isMoveBishop = bishop.isIsMovePossible(startCoord, endCoord);
                 Console.WriteLine($"Bishop: {isMoveBishop}");
@@ -53,9 +53,13 @@ namespace ConsoleApp
                 bool isMoveQueen = queen.IsMovePossible(startCoord, endCoord);
                 Console.WriteLine($"Quesn: {isMoveQueen}");
 
-                Pawn pawn = new Pawn();
-                bool isMovePawn = pawn.IsMovePossible(startCoord, endCoord, true, false);
-                Console.WriteLine($"Pawn: {isMovePawn}");
+                Pawn pawnWhite = new Pawn(Color.White);
+                bool isMovePawnWhite = pawnWhite.IsMovePossible(startCoord, endCoord);
+                Console.WriteLine($"White Pawn: {isMovePawnWhite}");
+
+                Pawn pawnBlack = new Pawn(Color.Black);
+                bool isMovePawnBlack = pawnBlack.IsMovePossible(startCoord, endCoord);
+                Console.WriteLine($"Black Pawn: {isMovePawnBlack}");
 
                 #region Minimum steps from start to finish for knight
                 //int[,] board = new int[8, 8];
@@ -72,7 +76,7 @@ namespace ConsoleApp
                 //        Console.Write(board[y, x] + "\t");
                 //    Console.WriteLine();
                 //}
-                //int minSteps = board[endCoord.Rank, endCoord.File];
+                //int minSteps = board[endCoord.Row, endCoord.Column];
                 //Console.WriteLine($"Minimum steps from start to finish: {minSteps}");
                 #endregion
             }

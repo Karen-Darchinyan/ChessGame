@@ -1,6 +1,6 @@
 ﻿namespace ChessLibrary
 {
-    public enum File
+    public enum Column
     {
         A = 1, 
         B = 2, 

@@ -2,13 +2,14 @@
 {
     public class Rook
     {
+        public Color color;
         public bool IsMovePossible(Coord startCoord, Coord endCoord)
         {
-            if (startCoord.Rank == endCoord.Rank && startCoord.File == endCoord.File)
+            if (startCoord.Row == endCoord.Row && startCoord.Column == endCoord.Column)
                 return false;
-            int bx = Math.Abs(startCoord.Rank - endCoord.Rank);
-            int by = Math.Abs(startCoord.File - endCoord.File);
-            return startCoord.Rank == endCoord.Rank || startCoord.File == endCoord.File;
+            int bx = Math.Abs(startCoord.Row - endCoord.Row);
+            int by = Math.Abs(startCoord.Column - endCoord.Column);
+            return startCoord.Row == endCoord.Row || startCoord.Column == endCoord.Column;
         }
     }
 }
